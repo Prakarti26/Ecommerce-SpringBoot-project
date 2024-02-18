@@ -17,19 +17,22 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity<DBRespository> save(@RequestBody ProductRequest productRequest){
-        long productId =  productService.addProduct(productRequest);
+    public ResponseEntity<ProductResponse> save(@RequestBody ProductRequest productRequest){
+    long productId =  productService.addProduct(productRequest);
 
-    DBRespository dbRespository = DBRespository.builder()
-                                                    .data(productId)
-                                                    .message("Product Added")
+    ProductResponse productResponse = ProductResponse.builder()
+                                                    .productId(productId)
+                                                    .price(productRequest.getPrice())
+                                                    .productName(productRequest.getProductName())
+                                                    .quantity(productRequest.getQuantity())
                                                     .build();
 
-    return new ResponseEntity<>(dbRespository, HttpStatus.CREATED);
+
+    return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
     }
 
 
-    @GetMapping("{/id}")
+    @GetMapping("/{id}")
     public ResponseEntity<DBRespository> getProductById(@PathVariable("id") long productId){
         ProductResponse productResponse = productService.getProductById(productId);
         DBRespository dbRespository = DBRespository.builder()

@@ -23,7 +23,7 @@ public class productServiceImpl implements ProductService {
     public Long addProduct(ProductRequest productRequest) {
         log.info("Product Request: Add product request is received {}", productRequest);
         Product product = Product.builder()
-                                .productName(productRequest.getProductname())
+                                .productName(productRequest.getProductName())
                                 .price(productRequest.getPrice())
                                 .quantity(productRequest.getQuantity())
                                 .build();
